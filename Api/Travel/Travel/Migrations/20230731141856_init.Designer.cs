@@ -12,7 +12,7 @@ using Travel.Data;
 namespace Travel.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    [Migration("20230731121456_init")]
+    [Migration("20230731141856_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,6 +24,31 @@ namespace Travel.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Travel.Models.Feedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateSubmitted")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Feedbacks");
+                });
 
             modelBuilder.Entity("Travel.Models.User", b =>
                 {

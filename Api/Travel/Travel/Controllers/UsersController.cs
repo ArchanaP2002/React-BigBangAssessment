@@ -87,8 +87,9 @@ namespace Travel.Controllers
                 {
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
-                //new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.Email, user.EmailId),
+                //new Claim(ClaimTypes.StreetAddress, user.Address),
+                //new Claim(ClaimTypes.SerialNumber, user.PhoneNumber),
              }),
                 Expires = DateTime.UtcNow.AddDays(1), // Token expiration time (you can adjust it as needed)
                 SigningCredentials = credentials
@@ -97,7 +98,7 @@ namespace Travel.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-
+       
         private string Encrypt(string password)
         {
             // Example key and IV generation using hashing

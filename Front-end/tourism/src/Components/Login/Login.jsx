@@ -26,17 +26,14 @@ const LoginPage = () => {
     console.log('Submitting login data:', formData);
 
     try {
-      // Make a POST request to the login endpoint with only emailId and password
-      const { emailId, password } = formData;
+       const { emailId, password } = formData;
       const response = await axios.post('https://localhost:7228/api/Users/login', { emailId, password });
 
       const token = response.data;
 
-      // Do something with the token, e.g., store it in local storage
-      localStorage.setItem('token', token);
+       localStorage.setItem('token', token);
 
-      // Show the token in the console
-      console.log('Token:', token);
+       console.log('Token:', token);
     } catch (error) {
       console.error('Error during login:', error.response.data);
     }

@@ -3959,11 +3959,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\archa\\source\\repos\\Travel\\Travel\\Travel.csproj",
+      "projectUniqueName": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\Travel.csproj",
       "projectName": "Travel",
-      "projectPath": "C:\\Users\\archa\\source\\repos\\Travel\\Travel\\Travel.csproj",
+      "projectPath": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\Travel.csproj",
       "packagesPath": "C:\\Users\\archa\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\archa\\source\\repos\\Travel\\Travel\\obj\\",
+      "outputPath": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\archa\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -12,7 +12,7 @@ using Travel.Data;
 namespace Travel.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    [Migration("20230731093127_init")]
+    [Migration("20230731121456_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace Travel.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
@@ -40,8 +43,14 @@ namespace Travel.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Id_Proof")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")

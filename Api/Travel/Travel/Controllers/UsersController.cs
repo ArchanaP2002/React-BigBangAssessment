@@ -16,7 +16,7 @@ namespace Travel.Controllers
     {
 
         private readonly IUsers _userRepository;
-        private readonly string _jwtSecret = "Yh2k7QSu4l8CZg5p6X3Pna9L0Miy4D3Bvt0JVr87UcOj69Kqw5R2Nmf4FWs03Hdx"; // Replace this with a secure secret key.
+        private readonly string _jwtSecret = "Yh2k7QSu4l8CZg5p6X3Pna9L0Miy4D3Bvt0JVr87UcOj69Kqw5R2Nmf4FWs03Hdx";  
 
         public UsersController(IUsers userRepository)
         {

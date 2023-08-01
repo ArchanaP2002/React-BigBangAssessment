@@ -1,0 +1,54 @@
+/* Register.css */
+.registration-container {
+    padding: 40px 0;
+  }
+  
+  .registration-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+  
+  .tourism-image {
+    width: 150px; /* Increase the image size */
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .registration-form {
+    background-color: #f0f0f0;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Rest of the CSS styles remain the same */
+  
+  .MuiOutlinedInput-root {
+    border-radius: 20px; /* Rounded corners for the input box */
+    width: 100%;
+  }
+  
+  .MuiOutlinedInput-input {
+    padding: 12px;
+  }
+  
+  .MuiOutlinedInput-notchedOutline {
+    border-color: #007bff;
+  }
+  
+  .MuiOutlinedInput-focused {
+    box-shadow: 0 0 4px #007bff;
+  }
+  
+  .MuiButton-containedPrimary {
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 20px; /* Rounded corners for the button */
+  }
+  
+  .MuiButton-containedPrimary:hover {
+    background-color: #0056b3;
+  }
+  

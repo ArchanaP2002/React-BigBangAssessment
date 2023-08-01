@@ -22,5 +22,7 @@ namespace Travel.Models
         public string? PhoneNumber { get; set; }
         public string? Id_Proof { get; set; }
 
+        public bool IsActive { get; set; }
+
     }
 }

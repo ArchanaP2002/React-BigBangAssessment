@@ -2,8 +2,8 @@
  
 # .NET Core build and output folders
 .vs
-LoanAccelerator/bin
-LoanAccelerator/obj
+Travel/bin
+Travel/obj
 
 # .NET Core artifacts
 *.dll

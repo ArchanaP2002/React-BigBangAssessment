@@ -14,7 +14,7 @@ namespace Travel.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
- 
+
         private readonly IUsers _userRepository;
         private readonly string _jwtSecret = "Yh2k7QSu4l8CZg5p6X3Pna9L0Miy4D3Bvt0JVr87UcOj69Kqw5R2Nmf4FWs03Hdx"; // Replace this with a secure secret key.
 
@@ -34,6 +34,16 @@ namespace Travel.Controllers
             // Encrypt the password before storing it
             user.Password = Encrypt(user.Password);
 
+            // Set IsActive status based on the role
+            if (user.Role == "Agent")
+            {
+                user.IsActive = false; // Pending approval for Agents
+            }
+            else
+            {
+                user.IsActive = true; // Active for other roles (e.g., "User")
+            }
+
             var createdUser = await _userRepository.AddUser(user);
 
             // Generate JWT token with user details
@@ -42,6 +52,7 @@ namespace Travel.Controllers
             // Return the token as part of the response
             return Ok(token);
         }
+
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody] User loginModel)
@@ -66,6 +77,12 @@ namespace Travel.Controllers
                 return Unauthorized("Invalid credentials");
             }
 
+            // Check if the user is active (only active users can log in)
+            if (!existingUser.IsActive)
+            {
+                return Unauthorized("User account is pending approval");
+            }
+
             // Passwords match, generate JWT token with user details
             var token = GenerateJwtToken(existingUser);
 
@@ -73,6 +90,35 @@ namespace Travel.Controllers
             return Ok(token);
         }
 
+        [HttpPost("approve/{userId}")]
+        public async Task<ActionResult> ApproveAgent(int userId)
+        {
+            if (_userRepository == null)
+            {
+                return Problem("User repository is null.");
+            }
+
+            // Find the user by their UserId
+            var agent = await _userRepository.GetUserById(userId);
+
+            if (agent == null)
+            {
+                return NotFound("Agent not found.");
+            }
+
+            // Check if the user is an agent
+            if (agent.Role != "Agent")
+            {
+                return BadRequest("The user is not an agent.");
+            }
+
+            // Set the agent's IsActive status to true to approve them
+            agent.IsActive = true;
+
+            await _userRepository.UpdateUser(agent);
+
+            return Ok("Agent approved successfully.");
+        }
 
 
         private string GenerateJwtToken(User user)
@@ -98,7 +144,7 @@ namespace Travel.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-       
+
         private string Encrypt(string password)
         {
             // Example key and IV generation using hashing

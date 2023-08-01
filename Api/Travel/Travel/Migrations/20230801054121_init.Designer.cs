@@ -12,7 +12,7 @@ using Travel.Data;
 namespace Travel.Migrations
 {
     [DbContext(typeof(TravelDbContext))]
-    [Migration("20230731141856_init")]
+    [Migration("20230801054121_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -70,6 +70,9 @@ namespace Travel.Migrations
 
                     b.Property<string>("Id_Proof")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()

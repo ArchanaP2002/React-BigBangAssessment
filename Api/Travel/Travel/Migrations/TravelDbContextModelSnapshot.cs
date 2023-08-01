@@ -68,6 +68,9 @@ namespace Travel.Migrations
                     b.Property<string>("Id_Proof")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

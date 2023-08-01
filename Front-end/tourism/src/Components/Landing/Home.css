@@ -1,0 +1,39 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .hero {
+    background-image: url('../../Images/Tourism1.avif');
+    background-size: cover;
+    padding: 100px 0;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .hero-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .section-heading {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .destinations {
+    padding: 40px 0;
+  }
+  
+  .explore-btn {
+    margin-top: 20px;
+  }
+  
+  footer {
+    background-color: #f0f0f0;
+    text-align: center;
+    padding: 20px;
+    color: #555;
+  }
+  

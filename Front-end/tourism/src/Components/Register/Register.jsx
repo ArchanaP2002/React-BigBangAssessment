@@ -1,6 +1,6 @@
 // RegistrationPage.js
 import React, { useState } from 'react';
-import { Button, Typography, TextField, Grid, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import { Button, Typography, TextField, Grid, RadioGroup, FormControlLabel,  MenuItem  } from '@mui/material';
 import axios from 'axios';
 import Tourismimage from '../../Images/Tourismimg.avif';
 import './Register.css';
@@ -120,25 +120,93 @@ const RegistrationPage = () => {
   return (
     <Grid container spacing={2} justifyContent="center" alignItems="center">
       <Grid item xs={12} md={6}>
-        <Typography variant="h4" gutterBottom className="registration-header">
-          <img src={Tourismimage} alt="Tourism" className="tourism-image" />
-          User Registration
-        </Typography>
+        <img src={Tourismimage} alt="Tourism" className="tourism-image" />
+
       </Grid>
 
       <Grid item xs={12} md={6}>
+        <Typography variant="h4" gutterBottom className="registration-header">
+          User Registration
+        </Typography>
         <div className="registration-form">
           <form onSubmit={handleSubmit}>
+            <div>
+              <TextField
+                label="Username"
+                id='texfield'
+                name="userName"
+                value={formData.userName}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                error={!isNameValid}
+                helperText={!isNameValid ? userNameError : ''}
+                InputProps={{
+                  classes: {
+                    root: 'MuiOutlinedInput-root',
+                    input: 'MuiOutlinedInput-input',
+                    focused: 'MuiOutlinedInput-focused',
+                    notchedOutline: 'MuiOutlinedInput-notchedOutline',
+                  },
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Email"
+                name="emailId"
+                id='texfield'
+                type="email"
+                value={formData.emailId}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+                error={Boolean(emailError)}
+                helperText={emailError}
+                InputProps={{
+                  classes: {
+                    root: 'MuiOutlinedInput-root',
+                    input: 'MuiOutlinedInput-input',
+                    focused: 'MuiOutlinedInput-focused',
+                    notchedOutline: 'MuiOutlinedInput-notchedOutline',
+                  },
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Password"
+                id='texfield'
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+                error={Boolean(passwordError)}
+                helperText={passwordError}
+                InputProps={{
+                  classes: {
+                    root: 'MuiOutlinedInput-root',
+                    input: 'MuiOutlinedInput-input',
+                    focused: 'MuiOutlinedInput-focused',
+                    notchedOutline: 'MuiOutlinedInput-notchedOutline',
+                  },
+                }}
+              />
+            </div>
+            <div>
             <TextField
-              label="Username"
-              name="userName"
-              value={formData.userName}
+              label="Role"
+              name="role"
+              id='texfield'
+              select
+              value={formData.role} 
               onChange={handleChange}
-              fullWidth
               margin="normal"
               variant="outlined"
-              error={!isNameValid}
-              helperText={!isNameValid ? userNameError : ''}
               InputProps={{
                 classes: {
                   root: 'MuiOutlinedInput-root',
@@ -147,89 +215,85 @@ const RegistrationPage = () => {
                   notchedOutline: 'MuiOutlinedInput-notchedOutline',
                 },
               }}
-            />
-
-            <TextField
-              label="Email"
-              name="emailId"
-              type="email"
-              value={formData.emailId}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              required
-              error={Boolean(emailError)}
-              helperText={emailError}
-            />
-
-            <TextField
-              label="Password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              required
-              error={Boolean(passwordError)}
-              helperText={passwordError}
-            />
-
-            <RadioGroup
-              aria-label="Role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              style={{ marginBottom: '16px' }}
             >
-              <FormControlLabel value="user" control={<Radio />} label="User" />
-              <FormControlLabel value="agent" control={<Radio />} label="Agent" />
-            </RadioGroup>
-
-            <TextField
-              label="Address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              required
-              error={Boolean(addressError)}
-              helperText={addressError}
-            />
-
-            <TextField
-              label="Phone Number"
-              name="phoneNumber"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              required
-              error={Boolean(phoneNumberError)}
-              helperText={phoneNumberError}
-            />
-
-            <TextField
-              label="ID Proof"
-              name="id_Proof"
-              value={formData.id_Proof}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              required
-              error={Boolean(idProofError)}
-              helperText={idProofError}
-            />
-
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-              Register
-            </Button>
+                          <MenuItem value="">
+              <em> </em>
+            </MenuItem>
+              <MenuItem value="user">User</MenuItem>
+              <MenuItem value="agent">Agent</MenuItem>
+            </TextField>
+            </div>
+            <div>
+              <TextField
+                label="Address"
+                name="address"
+                id='texfield'
+                value={formData.address}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+                error={Boolean(addressError)}
+                helperText={addressError}
+                InputProps={{
+                  classes: {
+                    root: 'MuiOutlinedInput-root',
+                    input: 'MuiOutlinedInput-input',
+                    focused: 'MuiOutlinedInput-focused',
+                    notchedOutline: 'MuiOutlinedInput-notchedOutline',
+                  },
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                label="Phone Number"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                margin="normal"
+                id='texfield'
+                variant="outlined"
+                required
+                error={Boolean(phoneNumberError)}
+                helperText={phoneNumberError}
+                InputProps={{
+                  classes: {
+                    root: 'MuiOutlinedInput-root',
+                    input: 'MuiOutlinedInput-input',
+                    focused: 'MuiOutlinedInput-focused',
+                    notchedOutline: 'MuiOutlinedInput-notchedOutline',
+                  },
+                }}
+              />
+            </div>
+            <div>
+              <TextField
+                label="ID Proof"
+                id='texfield'
+                name="id_Proof"
+                value={formData.id_Proof}
+                onChange={handleChange}
+                margin="normal"
+                variant="outlined"
+                required
+                error={Boolean(idProofError)}
+                helperText={idProofError}
+                InputProps={{
+                  classes: {
+                    root: 'MuiOutlinedInput-root',
+                    input: 'MuiOutlinedInput-input',
+                    focused: 'MuiOutlinedInput-focused',
+                    notchedOutline: 'MuiOutlinedInput-notchedOutline',
+                  },
+                }}
+              />
+            </div>
+            <div>
+              <Button type="submit" variant="contained" color="primary"   >
+                Register
+              </Button>
+            </div>
           </form>
         </div>
       </Grid>

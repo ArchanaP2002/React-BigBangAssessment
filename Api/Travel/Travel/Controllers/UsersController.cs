@@ -62,32 +62,27 @@ namespace Travel.Controllers
                 return Problem("User repository is null.");
             }
 
-            // Find the user by their email
-            var existingUser = await _userRepository.GetUserByEmail(loginModel.EmailId);
+             var existingUser = await _userRepository.GetUserByEmail(loginModel.EmailId);
 
             if (existingUser == null)
             {
                 return Unauthorized("Invalid credentials");
             }
 
-            // Decrypt the stored password and compare it with the provided password
-            var decryptedPassword = Decrypt(existingUser.Password);
+             var decryptedPassword = Decrypt(existingUser.Password);
             if (loginModel.Password != decryptedPassword)
             {
                 return Unauthorized("Invalid credentials");
             }
 
-            // Check if the user is active (only active users can log in)
-            if (!existingUser.IsActive)
+             if (!existingUser.IsActive)
             {
                 return Unauthorized("User account is pending approval");
             }
 
-            // Passwords match, generate JWT token with user details
-            var token = GenerateJwtToken(existingUser);
+             var token = GenerateJwtToken(existingUser);
 
-            // Return the token as part of the response
-            return Ok(token);
+             return Ok(token);
         }
 
         [HttpPost("approve/{userId}")]
@@ -98,28 +93,58 @@ namespace Travel.Controllers
                 return Problem("User repository is null.");
             }
 
-            // Find the user by their UserId
-            var agent = await _userRepository.GetUserById(userId);
+             var agent = await _userRepository.GetUserById(userId);
 
             if (agent == null)
             {
                 return NotFound("Agent not found.");
             }
 
-            // Check if the user is an agent
-            if (agent.Role != "Agent")
+             if (agent.Role != "Agent")
             {
                 return BadRequest("The user is not an agent.");
             }
 
-            // Set the agent's IsActive status to true to approve them
-            agent.IsActive = true;
+             agent.IsActive = true;
 
             await _userRepository.UpdateUser(agent);
 
             return Ok("Agent approved successfully.");
         }
 
+        [HttpPost("reject/{userId}")]
+        public async Task<ActionResult> RejectUser(int userId)
+        {
+            if (_userRepository == null)
+            {
+                return Problem("User repository is null.");
+            }
+
+            var user = await _userRepository.GetUserById(userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            await _userRepository.DeleteUser(user); // Delete the user from the database
+
+            return Ok("User rejected successfully.");
+        }
+
+
+        [HttpGet("pending")]
+        public async Task<ActionResult<IEnumerable<User>>> GetPendingUsers()
+        {
+            if (_userRepository == null)
+            {
+                return Problem("User repository is null.");
+            }
+
+             var pendingUsers = await _userRepository.GetPendingUsers();
+
+            return Ok(pendingUsers);
+        }
 
         private string GenerateJwtToken(User user)
         {
@@ -137,7 +162,7 @@ namespace Travel.Controllers
                 //new Claim(ClaimTypes.StreetAddress, user.Address),
                 //new Claim(ClaimTypes.SerialNumber, user.PhoneNumber),
              }),
-                Expires = DateTime.UtcNow.AddDays(1), // Token expiration time (you can adjust it as needed)
+                Expires = DateTime.UtcNow.AddDays(1),  
                 SigningCredentials = credentials
             };
 
@@ -147,8 +172,7 @@ namespace Travel.Controllers
 
         private string Encrypt(string password)
         {
-            // Example key and IV generation using hashing
-            string passphrase = "your-passphrase";
+             string passphrase = "your-passphrase";
 
             using (SHA256 sha256 = SHA256.Create())
             {

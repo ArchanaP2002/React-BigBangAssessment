@@ -8,7 +8,7 @@ import { TableHead } from '@mui/material';
 import { TableRow } from '@mui/material';
 import { Paper } from '@mui/material';
 import axios from 'axios';
-
+ 
 const AdminApprovalPage = () => {
   const [pendingUsers, setPendingUsers] = useState([]);
 
@@ -18,7 +18,7 @@ const AdminApprovalPage = () => {
 
   const fetchPendingUsers = async () => {
     try {
-      const response = await axios.get('/api/Users/pending');
+      const response = await axios.get('https://localhost:7228/api/Users/pending');
       setPendingUsers(response.data);
     } catch (error) {
       console.error('Error fetching pending users:', error);
@@ -27,7 +27,7 @@ const AdminApprovalPage = () => {
 
   const handleApproveUser = async (userId) => {
     try {
-      await axios.post('/api/Users/approveAgent', { userId }); // Send the userId to the API
+      await axios.post(`https://localhost:7228/api/Users/approve/${userId}`);
       fetchPendingUsers();
     } catch (error) {
       console.error('Error approving user:', error);
@@ -36,7 +36,7 @@ const AdminApprovalPage = () => {
 
   const handleRejectUser = async (userId) => {
     try {
-      await axios.post('/api/Users/reject', { userId });
+      await axios.post(`https://localhost:7228/api/Users/reject/${userId}`);
       fetchPendingUsers();
     } catch (error) {
       console.error('Error rejecting user:', error);
@@ -50,7 +50,7 @@ const AdminApprovalPage = () => {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>User ID</TableCell>
+               
               <TableCell>Username</TableCell>
               <TableCell>Email</TableCell>
               <TableCell>Actions</TableCell>
@@ -59,9 +59,8 @@ const AdminApprovalPage = () => {
           <TableBody>
             {pendingUsers.map((user) => (
               <TableRow key={user.userId}>
-                <TableCell>{user.userId}</TableCell>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>{user.email}</TableCell>
+                 <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.emailId}</TableCell>
                 <TableCell>
                   <Button variant="contained" color="primary" onClick={() => handleApproveUser(user.userId)}>
                     Approve

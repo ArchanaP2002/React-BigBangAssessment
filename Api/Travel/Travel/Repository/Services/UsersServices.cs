@@ -42,9 +42,21 @@ namespace Travel.Repository.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteUser(User user)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<User> GetUserByEmail(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.EmailId == email);
+        }
+
+        public async Task<IEnumerable<User>> GetPendingUsers()
+        {
+            var pendingUsers = await _context.Users.Where(u => u.IsActive == false).ToListAsync();
+            return pendingUsers;
         }
 
         private string Encrypt(string password)

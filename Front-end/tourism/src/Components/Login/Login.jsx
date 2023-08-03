@@ -4,6 +4,7 @@ import { Typography } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Container } from '@mui/material';
 import axios from 'axios';
+import jwt_decode from 'jwt-decode'; 
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -20,11 +21,14 @@ const Login = () => {
     try {
       const response = await axios.post('https://localhost:7228/api/Users/login', formData, {
         headers: {
-          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
         },
       });
 
-      console.log('Login success:', response.data); // The token will be printed in the console
+      const encodedToken = response.data;
+      const decodedToken = jwt_decode(encodedToken);
+      console.log('Decoded Token:', decodedToken);
+      console.log('Login success:', response.data);  
     } catch (error) {
       console.error('Error during login:', error.response.data);
     }
@@ -38,7 +42,7 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <TextField
           label="Email"
-          name="emailId" // Use 'emailId' instead of 'email'
+          name="emailId" 
           type="email"
           value={formData.emailId}
           onChange={handleChange}

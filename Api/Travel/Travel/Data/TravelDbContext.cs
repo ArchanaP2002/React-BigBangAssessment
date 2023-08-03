@@ -11,5 +11,7 @@ namespace Travel.Data
 
         public DbSet<User>Users { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<ImageGallary> ImageGallaries { get; set;}
      }
 }

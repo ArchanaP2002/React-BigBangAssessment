@@ -152,3 +152,4 @@ C:\Kanini\Travel-BigBank\React-BigBangAssessment\Api\Travel\Travel\obj\Debug\net
 C:\Kanini\Travel-BigBank\React-BigBangAssessment\Api\Travel\Travel\obj\Debug\net7.0\Travel.pdb
 C:\Kanini\Travel-BigBank\React-BigBangAssessment\Api\Travel\Travel\obj\Debug\net7.0\Travel.genruntimeconfig.cache
 C:\Kanini\Travel-BigBank\React-BigBangAssessment\Api\Travel\Travel\obj\Debug\net7.0\ref\Travel.dll
+C:\Kanini\Travel-BigBank\React-BigBangAssessment\Api\Travel\Travel\bin\Debug\net7.0\Travel.staticwebassets.runtime.json

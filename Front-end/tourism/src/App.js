@@ -1,12 +1,23 @@
 import React from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import RegistrationPage from './Components/Register/Register';
 import LoginPage from './Components/Login/Login';
 import AdminApprovalPage from './Components/AdminApproval/AdminApprovalPage';
 import HomePage from './Components/Landing/Home';
+import Navbar from './Components/Navbar/Navbar';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2196F3', // Customize the primary color
+    },
+  },
+});
 
 function App() {
   return (
+    <ThemeProvider theme={theme}>
     <BrowserRouter>
       {/* <nav>
         <ul>
@@ -19,16 +30,22 @@ function App() {
           <li>
             <Link to="/admin-approval">Admin Approval</Link>
           </li>
+          <li>
+            <Link to="/Landing">Home</Link>
+          </li>
         </ul>
+        
       </nav> */}
-      <HomePage />
-      {/* <Routes>
+      <Navbar />
+      {/* <HomePage /> */}
+      <Routes>
         <Route path="/register" element={<RegistrationPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin-approval" element={<AdminApprovalPage />} />
-        <Route path='/Landing' element={<HomePage />} />
-      </Routes> */}
+        <Route path='/' element={<HomePage />} />
+      </Routes>
     </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

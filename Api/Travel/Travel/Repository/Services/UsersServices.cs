@@ -38,7 +38,7 @@ namespace Travel.Repository.Services
 
         public async Task UpdateUser(User user)
         {
-            _context.Users.Update(user);
+            _context.Users.Update(user); 
             await _context.SaveChangesAsync();
         }
 

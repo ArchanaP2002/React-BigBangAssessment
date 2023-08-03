@@ -35,24 +35,28 @@ namespace Travel.Controllers
             user.Password = Encrypt(user.Password);
 
             // Set IsActive status based on the role
-            if (user.Role == "Agent")
+            if (user.Role == "Agent" || user.Role == "agent")
             {
                 user.IsActive = false; // Pending approval for Agents
+                var createdUser = await _userRepository.AddUser(user);
+
+                // Return the token as part of the response
+                return Ok("Wait untill Approval");
             }
             else
             {
-                user.IsActive = true; // Active for other roles (e.g., "User")
+                user.IsActive = true; // Active for other roles 
+                var createdUser = await _userRepository.AddUser(user);
+
+                // Generate JWT token with user details
+                var token = GenerateJwtToken(createdUser);
+
+                // Return the token  
+                return Ok(token);
             }
 
-            var createdUser = await _userRepository.AddUser(user);
-
-            // Generate JWT token with user details
-            var token = GenerateJwtToken(createdUser);
-
-            // Return the token as part of the response
-            return Ok(token);
+ 
         }
-
 
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody] User loginModel)
@@ -77,7 +81,7 @@ namespace Travel.Controllers
 
              if (!existingUser.IsActive)
             {
-                return Unauthorized("User account is pending approval");
+                return Unauthorized("User is not approved");
             }
 
              var token = GenerateJwtToken(existingUser);
@@ -159,8 +163,7 @@ namespace Travel.Controllers
                 new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
                 new Claim(ClaimTypes.Email, user.EmailId),
-                //new Claim(ClaimTypes.StreetAddress, user.Address),
-                //new Claim(ClaimTypes.SerialNumber, user.PhoneNumber),
+                new Claim(ClaimTypes.Role, user.Role)
              }),
                 Expires = DateTime.UtcNow.AddDays(1),  
                 SigningCredentials = credentials
@@ -204,7 +207,7 @@ namespace Travel.Controllers
         }
 
         private string Decrypt(string encryptedPassword)
-        {
+          {
             // Example key and IV generation using hashing
             string passphrase = "your-passphrase";
 

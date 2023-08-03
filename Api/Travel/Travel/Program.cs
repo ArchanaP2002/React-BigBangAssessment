@@ -14,6 +14,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<TravelDbContext>(Options => Options.UseSqlServer(builder.Configuration.GetConnectionString("dbconn")));
 builder.Services.AddScoped<IUsers, UsersServices>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+builder.Services.AddScoped<IImageGallary, ImageGallaryServices>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -29,7 +30,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Configure JWT authentication
+// Configure JWT authentication 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {

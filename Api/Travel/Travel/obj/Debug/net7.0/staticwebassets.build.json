@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "w9e3aw14WaGo5mL9H8y3KefM16GKmChyjYUwhlOCCRM=",
+  "Hash": "XocelV04WNspxuRlaaBGW/72hgDTBDS+KW3f0SLChE4=",
   "Source": "Travel",
   "BasePath": "_content/Travel",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Travel\\wwwroot",
+      "Source": "Travel",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

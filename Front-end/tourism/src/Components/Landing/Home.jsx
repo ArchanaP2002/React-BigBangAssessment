@@ -5,6 +5,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Tourismimage from '../../Images/Tourism1.avif';
+import BackgroundVideo from '../../Images/Tourism.mp4'
 
 const HomePage = () => {
 
@@ -47,19 +48,29 @@ const HomePage = () => {
       };
   return (
     <>
-      <AppBar position="static" color="primary">
+      {/* <AppBar position="static" color="primary">
         <Toolbar>
           <Typography variant="h6">Tourism</Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
 
       <main>
-        <section className="hero">
+      <section className="hero">
+          <video className="video-bg" autoPlay loop muted>
+            <source src={BackgroundVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
           <Container maxWidth="md">
             <div className="hero-content">
-              <Typography variant="h2" gutterBottom>Welcome to Your Dream Vacation</Typography>
-              <Typography variant="h5" paragraph>Explore the world with us and experience unforgettable adventures.</Typography>
-              <Button variant="contained" color="primary" size="large" className="explore-btn">Explore Tours</Button>
+              <Typography variant="h3" gutterBottom>
+                Welcome to Your Dream Vacation
+              </Typography>
+              <Typography variant="h5" paragraph>
+                Explore the world with us and experience unforgettable adventures.
+              </Typography>
+              <Button variant="contained"  size="large" className="explore-btn">
+                Explore Tours
+              </Button>
             </div>
           </Container>
         </section>

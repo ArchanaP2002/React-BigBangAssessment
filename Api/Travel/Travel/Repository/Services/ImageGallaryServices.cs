@@ -1,111 +1,155 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Travel.Data;
 using Travel.Models;
 using Travel.Repository.Interface;
 
 namespace Travel.Repository.Services
 {
-    public class ImageGallaryServices :IImageGallary
+    public class ImageGallaryServices : IImageGallary
     {
+        private readonly TravelDbContext _dbcontext;
+        private readonly IWebHostEnvironment _hostEnvironment;
 
-            private readonly TravelDbContext? _dbcontext;
-            private readonly IWebHostEnvironment _hostEnvironment;
-
-            public ImageGallaryServices(TravelDbContext dbcontext, IWebHostEnvironment hostEnvironment)
-            {
-                _dbcontext = dbcontext;
-                _hostEnvironment = hostEnvironment;
-            }
-
-        /*public async Task<string> PostAdminImageUpload(IFormFile file)
+        public ImageGallaryServices(TravelDbContext dbcontext, IWebHostEnvironment hostEnvironment)
         {
-            string originalFileName = Path.GetFileNameWithoutExtension(file.FileName);
-            string uniqueFileName = $"{originalFileName}_{DateTime.Now.ToString("yyyyMMddHHmmss")}{Path.GetExtension(file.FileName)}";
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/AdminImage", uniqueFileName);
+            _dbcontext = dbcontext;
+            _hostEnvironment = hostEnvironment;
+        }
 
-            using (Stream stream = new FileStream(path, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-
-            string imagePath = "~/AdminImage/" + uniqueFileName;
-            return imagePath;
-        }*/
         public async Task<List<ImageGallary>> Postall([FromForm] FileModel aiu)
         {
-            string ImagePath = await SaveImage(aiu.FormFile);
-            var newAdminImageUpload = new ImageGallary();
-            newAdminImageUpload.Id = aiu.Id;
-            newAdminImageUpload.ImagePath = ImagePath;
-            newAdminImageUpload.ImageDetails = aiu.ImageDetail;
-            var obj = await _dbcontext.ImageGallaries.AddAsync(newAdminImageUpload);
+            string imageFileName = await SaveImage(aiu.FormFile);
+
+            var newAdminImageUpload = new ImageGallary
+            {
+                Id = aiu.Id,
+                ImagePath = imageFileName,
+                ImageDetails = aiu.ImageDetail
+            };
+
+            _dbcontext.ImageGallaries.Add(newAdminImageUpload);
             await _dbcontext.SaveChangesAsync();
-            return await Getall(); // Return the list of images after adding the new image
+
+            return await Getall();
         }
 
         [NonAction]
-            public async Task<string> SaveImage(IFormFile imageFile)
+        public async Task<string> SaveImage(IFormFile imageFile)
+        {
+            string imageName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "AdminImage", imageName);
+
+            using (var fileStream = new FileStream(imagePath, FileMode.Create))
             {
-                string imageName = new String(Path.GetFileNameWithoutExtension(imageFile.FileName).Take(10).ToArray()).Replace(' ', '-');
-                imageName = imageName + DateTime.Now.ToString("yymmssfff") + Path.GetExtension(imageFile.FileName);
-                var imagePath = Path.Combine(_hostEnvironment.ContentRootPath, "wwwroot/AdminImage", imageName);
-                using (var fileStream = new FileStream(imagePath, FileMode.Create))
-                {
-                    await imageFile.CopyToAsync(fileStream);
-                }
-                return imageName;
+                await imageFile.CopyToAsync(fileStream);
             }
 
-            public async Task<List<ImageGallary>> Getall()
-            {
-                var images = _dbcontext.ImageGallaries.ToList();
-                var imageList = new List<ImageGallary>();
-                foreach (var image in images)
-                {
-                    var uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "AdminImage");
-                    var filePath = Path.Combine(uploadsFolder, image.ImagePath);
+            return imageName;
+        }
 
-                    var imageBytes = System.IO.File.ReadAllBytes(filePath);
+        public async Task<List<ImageGallary>> Getall()
+        {
+            var images = _dbcontext.ImageGallaries.ToList();
+            var imageList = new List<ImageGallary>();
+            foreach (var image in images)
+            {
+                var filePath = Path.Combine(_hostEnvironment.WebRootPath, "AdminImage", image.ImagePath);
+
+                if (File.Exists(filePath))
+                {
+                    var imageBytes = File.ReadAllBytes(filePath);
                     var tourData = new ImageGallary
                     {
                         Id = image.Id,
-                        //UserId = image.UserId,
                         ImageDetails = image.ImageDetails,
                         ImagePath = Convert.ToBase64String(imageBytes)
                     };
                     imageList.Add(tourData);
                 }
-                return imageList;
             }
-
-            public async Task<ImageGallary> Getadminid(int id)
-            {
-                var images = _dbcontext.ImageGallaries.ToList();
-            ImageGallary byid = images.SingleOrDefault(p => p.Id == id);
-
-                var uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "AdminImage");
-                var filePath = Path.Combine(uploadsFolder, byid.ImagePath);
-
-                var imageBytes = System.IO.File.ReadAllBytes(filePath);
-                var tourData = new ImageGallary
-                {
-                    Id = byid.Id,
-                    //UserId = byid.UserId,
-                    ImageDetails = byid.ImageDetails,
-                    ImagePath = Convert.ToBase64String(imageBytes)
-                };
-
-                return tourData;
-
-            }
-
-        Task<List<ImageGallary>> IImageGallary.Postall(FileModel aiu)
-        {
-            throw new NotImplementedException();
+            return imageList;
         }
-    }
+
+
+        public async Task<ImageGallary> Getadminid(int id)
+        {
+            var byid = _dbcontext.ImageGallaries.FirstOrDefault(p => p.Id == id);
+
+            if (byid == null)
+            {
+                return null;
+            }
+
+            var uploadsFolder = Path.Combine(_hostEnvironment.WebRootPath, "AdminImage");
+            var filePath = Path.Combine(uploadsFolder, byid.ImagePath);
+
+            var imageBytes = await File.ReadAllBytesAsync(filePath);
+            var tourData = new ImageGallary
+            {
+                Id = byid.Id,
+                ImageDetails = byid.ImageDetails,
+                ImagePath = Convert.ToBase64String(imageBytes)
+            };
+
+            return tourData;
+        }
+
+        public async Task<ImageGallary> Update(int id, [FromForm] FileModel aiu)
+        {
+            var existingImage = await _dbcontext.ImageGallaries.FindAsync(id);
+
+            if (existingImage == null)
+            {
+                return null;
+            }
+
+            if (aiu.FormFile != null)
+            {
+                string newImageFileName = await SaveImage(aiu.FormFile);
+                DeleteImage(existingImage.ImagePath);
+                existingImage.ImagePath = newImageFileName;
+            }
+
+            existingImage.ImageDetails = aiu.ImageDetail;
+            await _dbcontext.SaveChangesAsync();
+
+            return existingImage;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var existingImage = await _dbcontext.ImageGallaries.FindAsync(id);
+
+            if (existingImage == null)
+            {
+                return false;
+            }
+
+            DeleteImage(existingImage.ImagePath);
+
+            _dbcontext.ImageGallaries.Remove(existingImage);
+            await _dbcontext.SaveChangesAsync();
+
+            return true;
+        }
+
+        [NonAction]
+        public void DeleteImage(string imagePath)
+        {
+            var filePath = Path.Combine(_hostEnvironment.WebRootPath, "AdminImage", imagePath);
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
 
     }
- 
+}

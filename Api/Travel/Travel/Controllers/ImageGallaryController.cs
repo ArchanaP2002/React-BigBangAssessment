@@ -62,6 +62,33 @@ namespace Travel.Controllers
                 return new JsonResult(images);
             }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> Delete(int id)
+        {
+            var isDeleted = await _context.Delete(id);
+
+            if (!isDeleted)
+            {
+                return NotFound();
+            }
+
+            return Ok(true);
         }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<ImageGallary>> Put(int id, [FromForm] FileModel aiu)
+        {
+            var updatedImage = await _context.Update(id, aiu);
+
+            if (updatedImage == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(updatedImage);
+        }
+
+
     }
+}
  

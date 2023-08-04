@@ -36,8 +36,8 @@ const Navbar = () => {
         <NavButton component={Link} to="/admin-approval" color="inherit">
           Approval
         </NavButton>
-        <NavButton component={Link} to="/contact" color="inherit">
-          Contact
+        <NavButton component={Link} to="/image-gallary" color="inherit">
+          Gallary
         </NavButton>
         <NavButton component={Link} to="/contact" color="inherit">
           Contact

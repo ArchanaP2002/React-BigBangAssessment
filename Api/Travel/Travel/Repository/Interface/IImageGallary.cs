@@ -10,5 +10,8 @@ namespace Travel.Repository.Interface
 
         public Task<List<ImageGallary>> Getall();
         public Task<ImageGallary> Getadminid(int id);
+
+        Task<ImageGallary> Update(int id, FileModel aiu);
+        Task<bool> Delete(int id);
     }
 }

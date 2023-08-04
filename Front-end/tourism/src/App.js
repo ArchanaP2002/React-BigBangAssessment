@@ -6,6 +6,7 @@ import LoginPage from './Components/Login/Login';
 import AdminApprovalPage from './Components/AdminApproval/AdminApprovalPage';
 import HomePage from './Components/Landing/Home';
 import Navbar from './Components/Navbar/Navbar';
+import ImageGallery from './Components/ImageGallary/ImageGallary';
 
 const theme = createTheme({
   palette: {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin-approval" element={<AdminApprovalPage />} />
         <Route path='/' element={<HomePage />} />
+        <Route path='/image-gallary' element={<ImageGallery />} />
       </Routes>
     </BrowserRouter>
     </ThemeProvider>

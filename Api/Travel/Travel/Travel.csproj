@@ -19,6 +19,9 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Itinerary\" />
+    <Folder Include="wwwroot\Hotel\" />
+    <Folder Include="wwwroot\Package\" />
   </ItemGroup>
 
 </Project>

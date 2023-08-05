@@ -36,11 +36,20 @@ const Navbar = () => {
         <NavButton component={Link} to="/admin-approval" color="inherit">
           Approval
         </NavButton>
+        <NavButton component={Link} to="/admin-image-gallary" color="inherit">
+          AddGallary
+        </NavButton>
         <NavButton component={Link} to="/image-gallary" color="inherit">
           Gallary
         </NavButton>
-        <NavButton component={Link} to="/contact" color="inherit">
-          Contact
+        <NavButton component={Link} to="/adding-package" color="inherit">
+          AddPackage
+        </NavButton>
+        <NavButton component={Link} to="/itinerary/:packageId" color="inherit">
+          Itinerary Upload
+        </NavButton>
+        <NavButton component={Link} to="/booking" color="inherit">
+          Booking
         </NavButton>
         <NavButton component={Link} to="/contact" color="inherit">
           Contact

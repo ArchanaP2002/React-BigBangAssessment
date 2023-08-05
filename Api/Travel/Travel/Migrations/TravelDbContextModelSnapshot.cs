@@ -22,6 +22,41 @@ namespace Travel.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Travel.Models.Booking", b =>
+                {
+                    b.Property<int>("BookingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
+
+                    b.Property<DateTime?>("DateOfBooking")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateOfTheTrip")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("NumberOfPeople")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PackageId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("TotalAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("BookingId");
+
+                    b.HasIndex("PackageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Bookings");
+                });
+
             modelBuilder.Entity("Travel.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -74,9 +109,44 @@ namespace Travel.Migrations
                     b.Property<string>("Rating")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Feedbacks");
+                });
+
+            modelBuilder.Entity("Travel.Models.Hotel", b =>
+                {
+                    b.Property<int>("HotelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HotelId"));
+
+                    b.Property<string>("HotelName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("HotelPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("HotelRating")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("HotelsImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PackageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HotelId");
+
+                    b.HasIndex("PackageId");
+
+                    b.ToTable("Hotel");
                 });
 
             modelBuilder.Entity("Travel.Models.ImageGallary", b =>
@@ -96,6 +166,75 @@ namespace Travel.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ImageGallaries");
+                });
+
+            modelBuilder.Entity("Travel.Models.ItineraryDetail", b =>
+                {
+                    b.Property<int>("ItineraryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ItineraryId"));
+
+                    b.Property<string>("Activities")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DayNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItineraryImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ItineraryPlace")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PackageId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PackagesPackageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Time")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ItineraryId");
+
+                    b.HasIndex("PackagesPackageId");
+
+                    b.ToTable("ItineraryDetail");
+                });
+
+            modelBuilder.Entity("Travel.Models.Packages", b =>
+                {
+                    b.Property<int>("PackageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PackageId"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Duration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("PackagePrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Place")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PlaceImage")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PackageId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("Travel.Models.User", b =>
@@ -138,6 +277,71 @@ namespace Travel.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Travel.Models.Booking", b =>
+                {
+                    b.HasOne("Travel.Models.Packages", "Package")
+                        .WithMany("Bookings")
+                        .HasForeignKey("PackageId");
+
+                    b.HasOne("Travel.Models.User", "User")
+                        .WithMany("BookingTrips")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Package");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Travel.Models.Feedback", b =>
+                {
+                    b.HasOne("Travel.Models.User", null)
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("Travel.Models.Hotel", b =>
+                {
+                    b.HasOne("Travel.Models.Packages", "Package")
+                        .WithMany("Hotels")
+                        .HasForeignKey("PackageId");
+
+                    b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("Travel.Models.ItineraryDetail", b =>
+                {
+                    b.HasOne("Travel.Models.Packages", null)
+                        .WithMany("ItineraryDetails")
+                        .HasForeignKey("PackagesPackageId");
+                });
+
+            modelBuilder.Entity("Travel.Models.Packages", b =>
+                {
+                    b.HasOne("Travel.Models.User", "User")
+                        .WithMany("Packages")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Travel.Models.Packages", b =>
+                {
+                    b.Navigation("Bookings");
+
+                    b.Navigation("Hotels");
+
+                    b.Navigation("ItineraryDetails");
+                });
+
+            modelBuilder.Entity("Travel.Models.User", b =>
+                {
+                    b.Navigation("BookingTrips");
+
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Packages");
                 });
 #pragma warning restore 612, 618
         }

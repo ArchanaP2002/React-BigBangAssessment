@@ -15,6 +15,11 @@ builder.Services.AddDbContext<TravelDbContext>(Options => Options.UseSqlServer(b
 builder.Services.AddScoped<IUsers, UsersServices>();
 builder.Services.AddScoped<IFeedbackRepository, FeedbackRepository>();
 builder.Services.AddScoped<IImageGallary, ImageGallaryServices>();
+builder.Services.AddScoped<IItinerary, ItineraryService>();
+builder.Services.AddScoped<IPackage, PackageService>();
+builder.Services.AddScoped<IHotel, HotelService>();
+
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

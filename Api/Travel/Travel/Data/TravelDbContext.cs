@@ -13,5 +13,9 @@ namespace Travel.Data
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<ImageGallary> ImageGallaries { get; set;}
+        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<Packages> Packages { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<ItineraryDetail> ItineraryDetail { get; set; }
      }
 }

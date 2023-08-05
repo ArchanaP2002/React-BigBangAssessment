@@ -7,6 +7,10 @@ import AdminApprovalPage from './Components/AdminApproval/AdminApprovalPage';
 import HomePage from './Components/Landing/Home';
 import Navbar from './Components/Navbar/Navbar';
 import ImageGallery from './Components/ImageGallary/ImageGallary';
+import AdminImageGallery from './Components/AdminImageGallary/AdminImageGallary';
+import PackageManagement from './Components/Package/Package';
+import ItineraryManagement from './Components/Itinerary/Itinerary';
+import BookingManagement from './Components/Booking/Booking';
 
 const theme = createTheme({
   palette: {
@@ -44,7 +48,15 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/admin-approval" element={<AdminApprovalPage />} />
         <Route path='/' element={<HomePage />} />
+        <Route path='/admin-image-gallary' element={<AdminImageGallery />} />
         <Route path='/image-gallary' element={<ImageGallery />} />
+        <Route path='/adding-package' element={<PackageManagement />} />
+        <Route path="/itinerary/:packageId" element={<ItineraryManagement />} />
+        <Route path='/booking' element={<BookingManagement />} />
+
+
+
+
       </Routes>
     </BrowserRouter>
     </ThemeProvider>

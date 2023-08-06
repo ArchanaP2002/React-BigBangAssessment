@@ -81,7 +81,12 @@ namespace Travel.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Contacts");
                 });
@@ -109,7 +114,7 @@ namespace Travel.Migrations
                     b.Property<string>("Rating")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -163,7 +168,12 @@ namespace Travel.Migrations
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ImageGallaries");
                 });
@@ -294,11 +304,26 @@ namespace Travel.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Travel.Models.Contact", b =>
+                {
+                    b.HasOne("Travel.Models.User", "User")
+                        .WithMany("Contacts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Travel.Models.Feedback", b =>
                 {
-                    b.HasOne("Travel.Models.User", null)
+                    b.HasOne("Travel.Models.User", "User")
                         .WithMany("Feedbacks")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Travel.Models.Hotel", b =>
@@ -308,6 +333,15 @@ namespace Travel.Migrations
                         .HasForeignKey("PackageId");
 
                     b.Navigation("Package");
+                });
+
+            modelBuilder.Entity("Travel.Models.ImageGallary", b =>
+                {
+                    b.HasOne("Travel.Models.User", "User")
+                        .WithMany("ImageGallaries")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Travel.Models.ItineraryDetail", b =>
@@ -339,7 +373,11 @@ namespace Travel.Migrations
                 {
                     b.Navigation("BookingTrips");
 
+                    b.Navigation("Contacts");
+
                     b.Navigation("Feedbacks");
+
+                    b.Navigation("ImageGallaries");
 
                     b.Navigation("Packages");
                 });

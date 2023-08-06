@@ -33,7 +33,7 @@ const HomePage = () => {
       console.error('Error fetching packages:', error);
     }
   };
- 
+
   const SamplePrevArrow = (props) => {
     const { className, style, onClick } = props;
     return (
@@ -97,44 +97,42 @@ const HomePage = () => {
             </div>
           </Container>
         </section>
- 
+
 
         <section className="destinations">
           <Container maxWidth="lg">
             <Typography variant="h4" gutterBottom className="section-heading">
               Popular Destinations
             </Typography>
-            
+
             <Slider {...sliderSettings}>
-  {packages.map((pkg) => (
-    <div key={pkg.packageId}>
-      <Card style={{ maxWidth: 400, margin: '0 auto', height: 500, borderRadius: '10px' }}>
-        <CardMedia
-          component="img"
-          src={`data:image/jpeg;base64,${pkg.placeImage}`}
-          alt={pkg.place}
-          style={{ height: '300px', objectFit: 'cover' }}
-        />
-        <CardContent>
-          <h3>{pkg.place}</h3>
-          <p>Duration: {pkg.duration}</p>
-          <p>Price: {pkg.packagePrice}</p>
-          <p>Description: {pkg.description}</p>
-          <Link to={`/itinerary/${pkg.packageId}`}>View Itinerary</Link>
-        </CardContent>
-      </Card>
-    </div>
-  ))}
-</Slider>
+              {packages.map((pkg) => (
+                <div key={pkg.packageId}>
+                  <Card style={{ maxWidth: 400, margin: '0 auto', height: 500, borderRadius: '10px' }}>
+                    <CardMedia
+                      component="img"
+                      src={`data:image/jpeg;base64,${pkg.placeImage}`}
+                      alt={pkg.place}
+                      style={{ height: '300px', objectFit: 'cover' }}
+                    />
+                    <CardContent>
+                      <h3>{pkg.place}</h3>
+                      <p>Duration: {pkg.duration}</p>
+                      <p>Price: {pkg.packagePrice}</p>
+                      <p>Description: {pkg.description}</p>
+                      <Link to={`/itineraryList/${pkg.packageId}`}>View Itinerary</Link>
+                    </CardContent>
+                  </Card>
+                </div>
+              ))}
+            </Slider>
 
           </Container>
         </section>
       </main>
 
 
-      <footer>
-        <Typography variant="body2" color="textSecondary">&copy; 2023 Tourism Website. All rights reserved.</Typography>
-      </footer>
+   
     </>
   );
 };

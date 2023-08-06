@@ -1,202 +1,335 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-    Box,
-    Container,
-    Typography,
-    Grid,
-    TextField,
-    Button,
-    Card,
-    CardMedia,
-    CardContent,
+  Box,
+  Container,
+  Grid,
+  Typography,
+  Card,
+  CardMedia,
+  CardContent,
+  TextField,
+  Button,
+  Modal,
+  Backdrop,
+  Fade,
 } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
+import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import dayjs from 'dayjs';
+import './Itinerary.css';
 import { useParams } from 'react-router-dom';
+import Tour2 from '../../Images/tour8.jpg';
 
-function ItineraryManagement() {
-    const { packageId } = useParams(); // Get packageId from URL
-    const [itineraryDetails, setItineraryDetails] = useState([]);
-    const [formData, setFormData] = useState({
-        dayNumber: '',
-        activities: '',
-        time: '',
-        itineraryPlace: '',
-        itineraryImage: null,
-    });
+function Itinerary() {
+  const { packageId } = useParams();
+  const [itineraryDetails, setItineraryDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [formData, setFormData] = useState({
+    userId: '',
+    numberOfPeople: '',
+    dateOfTheTrip: '',
+    totalAmount: '',
+    dateOfBooking: '',
+  });
+  const [openModal, setOpenModal] = useState(false);
 
-    const timeSuggestions = [
-        'Morning',
-        'Afternoon',
-        'Evening',
-        'Full Day',
-        'Half Day',
-        // Add more time suggestions as needed
-    ];
-    
-    useEffect(() => {
-        fetchItineraryDetails();
-    }, []);
-    const fetchItineraryDetails = async () => {
-        try {
-            const response = await axios.get(`https://localhost:7228/api/Itinerary`);
-            if (Array.isArray(response.data)) {
-                setItineraryDetails(response.data);
-            } else {
-                console.error('Invalid itinerary details response:', response.data);
-            }
-        } catch (error) {
-            console.error('Error fetching itinerary details:', error);
-        }
+  const [formErrors, setFormErrors] = useState({
+    userId: '',
+    numberOfPeople: '',
+    dateOfTheTrip: '',
+    totalAmount: '',
+    dateOfBooking: '',
+  });
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+
+    if (name === 'dateOfTheTrip' || name === 'dateOfBooking') {
+      const parsedDate = dayjs(value);
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: parsedDate.isValid() ? parsedDate.toDate() : null,
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
     }
-    
+  };
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+  const handleModalOpen = () => {
+    setOpenModal(true);
+  };
 
-    const handleImageChange = (event) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            itineraryImage: event.target.files[0], // Update the image file
-        }));
-    };
-    
-    
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        const formDataToSend = new FormData();
-        for (const key in formData) {
-            formDataToSend.append(key, formData[key]);
-        }
-    
-        // Log FormData for debugging
-        console.log(formDataToSend);
-    
-        try {
-            formDataToSend.append('packageId', packageId);
-            await axios.post('https://localhost:7228/api/Itinerary', formDataToSend, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            
-                        setFormData({
-                dayNumber: '',
-                activities: '',
-                time: '',
-                itineraryPlace: '',
-                itineraryImage: null,
-            });
-            alert('Itinerary detail added successfully');
-            fetchItineraryDetails();
-        } catch (error) {
-            console.error('Error adding itinerary detail:', error);
-        }
-    };
-    
+  const validateForm = () => {
+    const errors = {};
+    let isValid = true;
 
-    return (
-        <div>
-            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
-                <Container maxWidth="md">
-                    <Typography variant="h4" sx={{ marginBottom: 2 }}>Itinerary Management</Typography>
-                    <form onSubmit={handleSubmit} encType="multipart/form-data">
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    label="Day Number"
-                                    name="dayNumber"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={formData.dayNumber}
-                                    onChange={handleInputChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    label="Activities"
-                                    name="activities"
-                                    variant="outlined"
-                                    fullWidth
-                                    multiline
-                                    rows={4}
-                                    value={formData.activities}
-                                    onChange={handleInputChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Autocomplete
-                                    options={timeSuggestions}
-                                    freeSolo
-                                    renderInput={(params) => (
-                                        <TextField
-                                            {...params}
-                                            label="Time"
-                                            name="time"
-                                            variant="outlined"
-                                            fullWidth
-                                            value={formData.time}
-                                            onChange={handleInputChange}
-                                        />
-                                    )}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    label="Itinerary Place"
-                                    name="itineraryPlace"
-                                    variant="outlined"
-                                    fullWidth
-                                    value={formData.itineraryPlace}
-                                    onChange={handleInputChange}
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <input
-                                    type="file"
-                                    name="itineraryImage"
-                                    accept="image/*"
-                                    onChange={handleImageChange}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button type="submit" variant="contained" color="primary" sx={{ marginTop: 2 }}>
-                            Add Itinerary Detail
-                        </Button>
-                    </form>
-                </Container>
-            </Box>
+    if (!formData.userId) {
+      errors.userId = 'User ID is required';
+      isValid = false;
+    }
 
-            <h2>Itinerary List</h2>
-            <Grid container spacing={3}>
-                {itineraryDetails.map((itinerary) => (
-                    <Grid item xs={12} sm={6} key={itinerary.itineraryId}>
-                        <Card>
-                            <CardMedia
-                                component="img"
-                                alt={itinerary.itineraryPlace}
-                                height="200"
-                                image={`data:image/jpeg;base64,${itinerary.itineraryImage}`}
-                            />
-                            <CardContent>
-                                <Typography variant="h6">{itinerary.itineraryPlace}</Typography>
-                                <Typography>Day: {itinerary.dayNumber}</Typography>
-                                <Typography>Activities: {itinerary.activities}</Typography>
-                                {/* Add more details here */}
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
-        </div>
-    );
+    if (!formData.numberOfPeople) {
+      errors.numberOfPeople = 'Number of People is required';
+      isValid = false;
+    } else if (!/^\d+$/.test(formData.numberOfPeople)) {
+      errors.numberOfPeople = 'Number of People must be a valid number';
+      isValid = false;
+    }
+
+    if (!formData.dateOfTheTrip) {
+      errors.dateOfTheTrip = 'Date of the Trip is required';
+      isValid = false;
+    }
+
+    if (!formData.totalAmount) {
+      errors.totalAmount = 'Total Amount is required';
+      isValid = false;
+    } else if (!/^\d+(\.\d{1,2})?$/.test(formData.totalAmount)) {
+      errors.totalAmount = 'Total Amount must be a valid number (up to 2 decimal places)';
+      isValid = false;
+    }
+
+    if (!formData.dateOfBooking) {
+      errors.dateOfBooking = 'Date of Booking is required';
+      isValid = false;
+    }
+
+    setFormErrors(errors);
+    return isValid;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (validateForm()) {
+      try {
+        await axios.post('https://localhost:7228/api/Booking', {
+          ...formData,
+          packageId: packageId,
+        });
+        setFormData({
+          userId: '',
+          numberOfPeople: '',
+          dateOfTheTrip: '',
+          totalAmount: '',
+          dateOfBooking: '',
+        });
+        alert('Booking added successfully');
+      } catch (error) {
+        console.error('Error adding booking:', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchItineraryDetails();
+  }, [packageId]);
+
+  const fetchItineraryDetails = async () => {
+    try {
+      const response = await axios.get(`https://localhost:7228/api/Itinerary/package/${packageId}`);
+      console.log('Itinerary details response:', response.data);
+
+      setItineraryDetails(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching itinerary details:', error);
+      setError('Error fetching itinerary details.');
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div>
+      <Box>
+        <section className="hero">
+          <img
+            src={Tour2}
+            alt="Header"
+            className="video-bg"
+            style={{ width: '100%', height: '800px', objectFit: 'cover', marginTop: '0px' }}
+          />
+          <Container maxWidth="md">
+            <div className="hero-content">
+              <Typography variant="h3" gutterBottom>
+                Welcome to Your Dream Vacation
+              </Typography>
+              <Typography variant="h5" paragraph>
+                Explore the world with us and experience unforgettable adventures.
+              </Typography>
+              <Button variant="contained" size="large" className="explore-btn" onClick={handleModalOpen}>
+                Book Your Trip
+              </Button>
+            </div>
+          </Container>
+        </section>
+      </Box>
+
+      <Grid container spacing={3} sx={{ padding: '2rem' }}>
+        {itineraryDetails.map((itinerary) => (
+          <Grid item xs={12} sm={4} key={itinerary.itineraryId}>
+            <Card elevation={3} sx={{ border: '1px solid #ddd' }}>
+              <CardMedia
+                component="img"
+                alt={itinerary.itineraryPlace}
+                height="200"
+                image={`data:image/jpeg;base64,${itinerary.itineraryImage}`}
+                sx={{ objectFit: 'cover' }}
+              />
+              <CardContent>
+                <Typography variant="h6" sx={{ marginBottom: 1 }}>
+                  {itinerary.itineraryPlace}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Day: {itinerary.dayNumber}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Activities: {itinerary.activities}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Time: {itinerary.time}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Modal
+        open={openModal}
+        onClose={handleModalClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={openModal}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              bgcolor: 'background.paper',
+              boxShadow: 24,
+              p: 4,
+              width: '50%',
+              maxHeight: '80%',
+              overflow: 'auto',
+              borderRadius: 8,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 2 }}>
+              Booking Details
+            </Typography>
+            <form onSubmit={handleSubmit}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <TextField
+                    label="User ID"
+                    name="userId"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.userId}
+                    onChange={handleInputChange}
+                    error={!!formErrors.userId}
+                    helperText={formErrors.userId}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Number of People"
+                    name="numberOfPeople"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.numberOfPeople}
+                    onChange={handleInputChange}
+                    error={!!formErrors.numberOfPeople}
+                    helperText={formErrors.numberOfPeople}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar
+                      label="Date of the Trip"
+                      name="dateOfTheTrip"
+                      value={formData.dateOfTheTrip ? dayjs(formData.dateOfTheTrip) : null}
+                      onChange={(newDate) =>
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          dateOfTheTrip: newDate ? newDate.toDate() : null,
+                        }))
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth
+                          {...params}
+                          error={!!formErrors.dateOfTheTrip}
+                          helperText={formErrors.dateOfTheTrip}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Total Amount"
+                    name="totalAmount"
+                    variant="outlined"
+                    fullWidth
+                    value={formData.totalAmount}
+                    onChange={handleInputChange}
+                    error={!!formErrors.totalAmount}
+                    helperText={formErrors.totalAmount}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar
+                      label="Date of Booking"
+                      name="dateOfBooking"
+                      value={formData.dateOfBooking ? dayjs(formData.dateOfBooking) : null}
+                      onChange={(newDate) =>
+                        setFormData((prevData) => ({
+                          ...prevData,
+                          dateOfBooking: newDate ? newDate.toDate() : null,
+                        }))
+                      }
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth
+                          {...params}
+                          error={!!formErrors.dateOfBooking}
+                          helperText={formErrors.dateOfBooking}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Grid>
+                <Grid item xs={12}>
+                  <Button type="submit" variant="contained" color="primary">
+                    Book Now
+                  </Button>
+                </Grid>
+              </Grid>
+            </form>
+          </Box>
+        </Fade>
+      </Modal>
+    </div>
+  );
 }
 
-export default ItineraryManagement;
+export default Itinerary;

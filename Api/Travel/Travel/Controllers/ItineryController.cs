@@ -30,6 +30,14 @@ namespace Travel.Controllers
             return await _itineraryService.GetItineraryDetail(id);
         }
 
+        [HttpGet("package/{packageId}")]
+        public async Task<ActionResult<List<ItineraryDetail>>> GetItineraryDetails(int packageId)
+        {
+            var itineraryDetails = await _itineraryService.GetItineraryDetailsByPackage(packageId);
+            return Ok(itineraryDetails);
+        }
+
+
         [HttpPut("{id}")]
         public async Task<ActionResult<List<ItineraryDetail>>> PutItineraryDetail(int id, [FromForm] ItineraryDetail itineraryDetail)
         {

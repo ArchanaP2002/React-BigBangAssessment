@@ -13,15 +13,20 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  Box
 } from '@mui/material';
 import { styled } from '@mui/system';
 import '../../App.css';
-
+import Tour4 from "../../Images/Image3.webp"
 const UploadContainer = styled('div')({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   margin: '1rem 0',
+});
+
+const PopupTitle = styled(DialogTitle)({
+  textAlign: 'center',
 });
 
 const CardRoot = styled(Card)({
@@ -99,6 +104,9 @@ const AdminImageGallery = () => {
 
   return (
     <div className='imagemargin'>
+      <Box  >
+        <img src={Tour4} alt="Header Image" style={{ width: '100%', height: '800px', objectFit: 'cover', marginTop: '0px' }} />
+      </Box>
       <h1>Image Gallery</h1>
       <UploadContainer>
         <Button
@@ -110,25 +118,23 @@ const AdminImageGallery = () => {
           Upload Image
         </Button>
       </UploadContainer>
-      <Grid container spacing={2}>
+      <Grid container spacing={2}  sx={{ paddingLeft: '5rem', paddingRight: '5rem' }}>
         {images.map(image => (
-          <Grid item xs={12} sm={6} md={4} key={image.id}>
-            <CardRoot>
+          <Grid item xs={12} sm={6} md={4} key={image.id}> 
+            <CardRoot style={{ width: 500 , height: 400,  paddingLeft: '2rem', paddingRight: '2rem', paddingTop: '2rem', background: '#dfddd3', borderRadius: 2}}>
               <CardMediaImg
                 component="img"
                 image={`data:image/jpeg;base64,${image.imagePath}`}
                 alt={image.imageDetails}
               />
               <CardContent>
-                <Typography variant="h6">{image.imageDetails}</Typography>
-                <Button onClick={() => handleUpdate(image.id)} color="primary">
-                                    Edit
-                                </Button>
+                <Typography variant="h6" style={{ textAlign: 'center', margin: '2rem 0' }}>{image.imageDetails}</Typography>
+ 
                 <Button
                   variant="contained"
                   color="secondary"
                   onClick={() => handleDelete(image.id)}
-                  style={{ marginTop: '8px' }}
+                  style={{ marginLeft: 85,marginTop: '2px' }}
                 >
                   Delete
                 </Button>
@@ -137,12 +143,12 @@ const AdminImageGallery = () => {
           </Grid>
         ))}
       </Grid>
-      <Dialog
+     <Dialog
         open={isDialogOpen}
         onClose={closeDialog}
         PaperProps={{ style: { padding: '16px' } }}
       >
-        <DialogTitle>Upload Image</DialogTitle>
+        <PopupTitle>Upload Image</PopupTitle>
         <DialogContent>
           <DialogContentText>
             Select an image and provide image details.

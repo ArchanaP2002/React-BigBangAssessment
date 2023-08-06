@@ -45,7 +45,7 @@ const Navbar = () => {
         <NavButton component={Link} to="/adding-package" color="inherit">
           AddPackage
         </NavButton>
-        <NavButton component={Link} to="/itinerary/:packageId" color="inherit">
+        <NavButton component={Link} to="/add-itinerary/:packageId" color="inherit">
           Itinerary Upload
         </NavButton>
         <NavButton component={Link} to="/booking" color="inherit">
@@ -53,6 +53,12 @@ const Navbar = () => {
         </NavButton>
         <NavButton component={Link} to="/contact" color="inherit">
           Contact
+        </NavButton>
+        <NavButton component={Link} to="/itineraryList/:packageId" color="inherit">
+          Itineary
+        </NavButton>
+        <NavButton component={Link} to="/login" color="inherit">
+          Login/Register
         </NavButton>
       </Toolbar>
     </CustomAppBar>

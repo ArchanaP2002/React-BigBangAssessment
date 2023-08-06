@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Travel.Data;
 using Travel.Models;
 using Travel.Repository.Interface;
@@ -16,20 +15,18 @@ namespace Travel.Repository.Services
 {
     public class ItineraryService : IItinerary
     {
-        private readonly TravelDbContext _dbcontext;
-        private readonly IWebHostEnvironment _hostEnvironment;
+        private readonly TravelDbContext _dbContext;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ItineraryService(TravelDbContext dbcontext, IWebHostEnvironment hostEnvironment)
+        public ItineraryService(TravelDbContext dbContext, IWebHostEnvironment webHostEnvironment)
         {
-            _dbcontext = dbcontext;
-            _hostEnvironment = hostEnvironment;
+            _dbContext = dbContext;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        [NotMapped]
-        public IFormFile ItineraryImg { get; set; }
         public async Task<List<ItineraryDetail>> GetItineraryDetails()
         {
-            var itineraryList = await _dbcontext.ItineraryDetail.ToListAsync();
+            var itineraryList = await _dbContext.ItineraryDetail.ToListAsync();
             foreach (var itinerary in itineraryList)
             {
                 itinerary.ItineraryImage = GetBase64Image(itinerary.ItineraryImage);
@@ -37,33 +34,49 @@ namespace Travel.Repository.Services
             return itineraryList;
         }
 
+        
         public async Task<ItineraryDetail> GetItineraryDetail(int id)
         {
-            var itinerary = await _dbcontext.ItineraryDetail.FindAsync(id);
-            itinerary.ItineraryImage = GetBase64Image(itinerary.ItineraryImage);
+            var itinerary = await _dbContext.ItineraryDetail.FindAsync(id);
+
+            if (itinerary == null)
+            {
+                throw new KeyNotFoundException($"Itinerary with ID {id} not found.");
+            }
+
+            if (itinerary.ItineraryImage != null)
+            {
+                itinerary.ItineraryImage = GetBase64Image(itinerary.ItineraryImage);
+            }
+
             return itinerary;
         }
+
         public async Task<List<ItineraryDetail>> PutItineraryDetail(int id, ItineraryDetail itineraryDetail)
         {
-            var obj = await _dbcontext.ItineraryDetail.FindAsync(id);
-            obj.DayNumber = itineraryDetail.DayNumber;
-            obj.Activities = itineraryDetail.Activities;
-            obj.Time = itineraryDetail.Time;
-            obj.ItineraryPlace = itineraryDetail.ItineraryPlace;
+            var existingItinerary = await _dbContext.ItineraryDetail.FindAsync(id);
+            if (existingItinerary == null)
+            {
+                throw new KeyNotFoundException("Itinerary not found");
+            }
+
+            existingItinerary.DayNumber = itineraryDetail.DayNumber;
+            existingItinerary.Activities = itineraryDetail.Activities;
+            existingItinerary.Time = itineraryDetail.Time;
+            existingItinerary.ItineraryPlace = itineraryDetail.ItineraryPlace;
 
             if (itineraryDetail.ItineraryImg != null)
             {
-                obj.ItineraryImage = await SaveItineraryImage(itineraryDetail.ItineraryImg);
+                existingItinerary.ItineraryImage = await SaveItineraryImage(itineraryDetail.ItineraryImg);
             }
 
-            await _dbcontext.SaveChangesAsync();
-            return await _dbcontext.ItineraryDetail.ToListAsync();
+            await _dbContext.SaveChangesAsync();
+            return await _dbContext.ItineraryDetail.ToListAsync();
         }
 
-        public async Task<List<ItineraryDetail>> PostItineraryDetail([FromForm] ItineraryDetail itineraryDetail)
+        public async Task<List<ItineraryDetail>> PostItineraryDetail(ItineraryDetail itineraryDetail)
         {
-            
-            string imageName = await SaveItineraryImage(itineraryDetail.ItineraryImg);
+            var imageName = await SaveItineraryImage(itineraryDetail.ItineraryImg);
 
             var newItinerary = new ItineraryDetail
             {
@@ -75,22 +88,31 @@ namespace Travel.Repository.Services
                 ItineraryImage = imageName
             };
 
-            await _dbcontext.ItineraryDetail.AddAsync(newItinerary);
-            await _dbcontext.SaveChangesAsync();
+            _dbContext.ItineraryDetail.Add(newItinerary);
+            await _dbContext.SaveChangesAsync();
 
-            return await _dbcontext.ItineraryDetail.ToListAsync();
+            return await _dbContext.ItineraryDetail.ToListAsync();
         }
 
         public async Task<List<ItineraryDetail>> DeleteItineraryDetail(int id)
         {
-            var obj = await _dbcontext.ItineraryDetail.FindAsync(id);
-            if (obj != null)
+            var itinerary = await _dbContext.ItineraryDetail.FindAsync(id);
+            if (itinerary != null)
             {
-                _dbcontext.ItineraryDetail.Remove(obj);
-                await _dbcontext.SaveChangesAsync();
+                _dbContext.ItineraryDetail.Remove(itinerary);
+                await _dbContext.SaveChangesAsync();
             }
-            return await _dbcontext.ItineraryDetail.ToListAsync();
+            return await _dbContext.ItineraryDetail.ToListAsync();
         }
+
+        public async Task<List<ItineraryDetail>> GetItineraryDetailsByPackage(int packageId)
+        {
+            return await _dbContext.ItineraryDetail
+                .Where(itinerary => itinerary.PackageId == packageId)
+                .ToListAsync();
+        }
+
+
 
         private string GetBase64Image(string imageName)
         {
@@ -99,7 +121,7 @@ namespace Travel.Repository.Services
                 return null;
             }
 
-            var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Itinerary", imageName);
+            var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Itinerary", imageName);
             var imageBytes = System.IO.File.ReadAllBytes(imagePath);
             return Convert.ToBase64String(imageBytes);
         }
@@ -114,7 +136,7 @@ namespace Travel.Repository.Services
             try
             {
                 string imageName = $"{DateTime.Now.ToString("yymmssfff")}_{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
-                var imagePath = Path.Combine(_hostEnvironment.WebRootPath, "Itinerary", imageName);
+                var imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "Itinerary", imageName);
 
                 using (var fileStream = new FileStream(imagePath, FileMode.Create))
                 {
@@ -130,6 +152,5 @@ namespace Travel.Repository.Services
                 return null;
             }
         }
-
     }
 }

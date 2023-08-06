@@ -9,8 +9,10 @@ import Navbar from './Components/Navbar/Navbar';
 import ImageGallery from './Components/ImageGallary/ImageGallary';
 import AdminImageGallery from './Components/AdminImageGallary/AdminImageGallary';
 import PackageManagement from './Components/Package/Package';
-import ItineraryManagement from './Components/Itinerary/Itinerary';
+import AgentItineraryManagement from './Components/AgentItinerary/AgentItinerary';
 import BookingManagement from './Components/Booking/Booking';
+import Footer from './Components/Footer/Footer';
+import ItineraryList from './Components/Itinerary/Itinerary';
 
 const theme = createTheme({
   palette: {
@@ -51,13 +53,12 @@ function App() {
         <Route path='/admin-image-gallary' element={<AdminImageGallery />} />
         <Route path='/image-gallary' element={<ImageGallery />} />
         <Route path='/adding-package' element={<PackageManagement />} />
-        <Route path="/itinerary/:packageId" element={<ItineraryManagement />} />
+        <Route path="/add-itinerary/:packageId" element={<AgentItineraryManagement />} />
         <Route path='/booking' element={<BookingManagement />} />
-
-
-
+        <Route path='/itineraryList/:packageId' element={<ItineraryList />} />
 
       </Routes>
+      <Footer />
     </BrowserRouter>
     </ThemeProvider>
   );

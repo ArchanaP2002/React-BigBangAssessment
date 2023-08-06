@@ -24,13 +24,16 @@ namespace Travel.Models
 
         public bool IsActive { get; set; }
 
-      //  public virtual ICollection<AdminImageUpload> AdminImageUploads { get; set; } = new List<AdminImageUpload>();
-
+     
         public virtual ICollection<Booking> BookingTrips { get; set; } = new List<Booking>();
 
         public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
         public virtual ICollection<Packages> Packages { get; set; } = new List<Packages>();
+        public virtual ICollection<ImageGallary> ImageGallaries { get; set; } = new List<ImageGallary>();
+        public virtual ICollection<Contact>  Contacts { get; set; } = new List<Contact>();
+
+
 
     }
 }

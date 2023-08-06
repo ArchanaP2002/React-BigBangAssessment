@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "WQJXhEIsMoMeIS2Ja4KuaC2sLxCiPh5C/ZfP/adYqSo=",
+  "Hash": "Z/eETR5Gcw8M+X39n22Chxwv9WZ09XMlmu0shxBQ/fY=",
   "Source": "Travel",
   "BasePath": "_content/Travel",
   "Mode": "Default",
@@ -16,6 +16,23 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\AdminImage\\1ee96a7b-cb0b-489c-af31-a20875b1bca6.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "AdminImage/1ee96a7b-cb0b-489c-af31-a20875b1bca6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\AdminImage\\1ee96a7b-cb0b-489c-af31-a20875b1bca6.jpg"
+    },
     {
       "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\AdminImage\\20b778d1-1df8-4a5e-acb3-5478716087b8.webp",
       "SourceId": "Travel",
@@ -119,6 +136,23 @@
       "OriginalItemSpec": "wwwroot\\AdminImage\\9b7912de-0516-45d2-9210-486a32399c69.jpg"
     },
     {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\AdminImage\\ad7ffee7-78a0-4090-9a8e-710359f9adba.webp",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "AdminImage/ad7ffee7-78a0-4090-9a8e-710359f9adba.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\AdminImage\\ad7ffee7-78a0-4090-9a8e-710359f9adba.webp"
+    },
+    {
       "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\AdminImage\\b77534ae-647d-412d-bee0-fcddb184bd33.jpg",
       "SourceId": "Travel",
       "SourceType": "Discovered",
@@ -134,6 +168,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\AdminImage\\b77534ae-647d-412d-bee0-fcddb184bd33.jpg"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\AdminImage\\f4835949-34ba-4b28-bb5f-fd1317f564f8.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "AdminImage/f4835949-34ba-4b28-bb5f-fd1317f564f8.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\AdminImage\\f4835949-34ba-4b28-bb5f-fd1317f564f8.jpg"
     },
     {
       "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\AdminImage\\f57c3c24-c299-4c6b-a44b-5fad791d701e.jpg",
@@ -187,6 +238,23 @@
       "OriginalItemSpec": "wwwroot\\Images\\31be895f-05a7-4164-9c51-3e2b3b97b3f1.avif"
     },
     {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Itinerary\\230126586_0cc1e602-7013-41fa-bdcd-9c561a2057bc.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Itinerary/230126586_0cc1e602-7013-41fa-bdcd-9c561a2057bc.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Itinerary\\230126586_0cc1e602-7013-41fa-bdcd-9c561a2057bc.jpg"
+    },
+    {
       "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Itinerary\\230823345_2fa65448-a224-4219-a15f-536f7571248a.jpg",
       "SourceId": "Travel",
       "SourceType": "Discovered",
@@ -236,6 +304,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Itinerary\\231802684_c07f1417-4b3d-4a06-88ae-ac7ba844292e.avif"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Itinerary\\231819703_b72ed10c-b68c-4805-ac9b-22902c9f8484.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Itinerary/231819703_b72ed10c-b68c-4805-ac9b-22902c9f8484.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Itinerary\\231819703_b72ed10c-b68c-4805-ac9b-22902c9f8484.jpg"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Itinerary\\234429212_592c6e8e-dfea-485a-9bbd-c1c376e4bda8.webp",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Itinerary/234429212_592c6e8e-dfea-485a-9bbd-c1c376e4bda8.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Itinerary\\234429212_592c6e8e-dfea-485a-9bbd-c1c376e4bda8.webp"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Itinerary\\235546050_4b905ebb-fe12-43c1-a1ce-8d0fd262ecb6.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Itinerary/235546050_4b905ebb-fe12-43c1-a1ce-8d0fd262ecb6.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Itinerary\\235546050_4b905ebb-fe12-43c1-a1ce-8d0fd262ecb6.jpg"
     },
     {
       "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Itinerary\\car.png230441920.webp",
@@ -425,6 +544,57 @@
       "OriginalItemSpec": "wwwroot\\Package\\231741890_b8d092e1-ed6e-471d-97fc-f6b52c0c151d.jpg"
     },
     {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Package\\232242546_aaea6079-db3b-44ac-b0f9-b007d20335cb.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Package/232242546_aaea6079-db3b-44ac-b0f9-b007d20335cb.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Package\\232242546_aaea6079-db3b-44ac-b0f9-b007d20335cb.jpg"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Package\\232606975_f6bef93f-009c-4cfc-a5a1-41ccdc1dd537.jpg",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Package/232606975_f6bef93f-009c-4cfc-a5a1-41ccdc1dd537.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Package\\232606975_f6bef93f-009c-4cfc-a5a1-41ccdc1dd537.jpg"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Package\\233147048_1b64e423-fb71-46b7-982f-4d1870ee98cb.webp",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Package/233147048_1b64e423-fb71-46b7-982f-4d1870ee98cb.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Package\\233147048_1b64e423-fb71-46b7-982f-4d1870ee98cb.webp"
+    },
+    {
       "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Package\\233233587_6cafb37b-5ec6-4a48-88b8-89385f0c9d53.webp",
       "SourceId": "Travel",
       "SourceType": "Discovered",
@@ -440,6 +610,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Package\\233233587_6cafb37b-5ec6-4a48-88b8-89385f0c9d53.webp"
+    },
+    {
+      "Identity": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\Package\\235842007_ca0ef35d-abca-45a5-8132-7afb11421d74.webp",
+      "SourceId": "Travel",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Kanini\\Travel-BigBank\\React-BigBangAssessment\\Api\\Travel\\Travel\\wwwroot\\",
+      "BasePath": "_content/Travel",
+      "RelativePath": "Package/235842007_ca0ef35d-abca-45a5-8132-7afb11421d74.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Package\\235842007_ca0ef35d-abca-45a5-8132-7afb11421d74.webp"
     }
   ]
 }

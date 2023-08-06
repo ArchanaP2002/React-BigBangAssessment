@@ -12,11 +12,9 @@ namespace Travel.Repository.Interface
         Task<List<ItineraryDetail>> GetItineraryDetails();
         Task<ItineraryDetail> GetItineraryDetail(int id);
         Task<List<ItineraryDetail>> PutItineraryDetail(int id, ItineraryDetail itineraryDetail);
-        Task<List<ItineraryDetail>> PostItineraryDetail([FromForm] ItineraryDetail itineraryDetail);
+        Task<List<ItineraryDetail>> PostItineraryDetail(ItineraryDetail itineraryDetail);
         Task<List<ItineraryDetail>> DeleteItineraryDetail(int id);
+        Task<List<ItineraryDetail>> GetItineraryDetailsByPackage(int packageId);
 
-        // Add the following property to the interface
-        [NotMapped]
-        IFormFile ItineraryImg { get; set; }
     }
 }

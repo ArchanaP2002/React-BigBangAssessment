@@ -14,6 +14,8 @@ import BookingManagement from './Components/Booking/Booking';
 import Footer from './Components/Footer/Footer';
 import ItineraryList from './Components/Itinerary/Itinerary';
 import FeedbackForm from './Components/Feedback/FeedbackForm';
+import HotelList from './Components/Hotel/HotelList';
+import HotelComponent from './Components/Hotel/HotelPost';
 
 const theme = createTheme({
   palette: {
@@ -58,6 +60,9 @@ function App() {
         <Route path='/booking' element={<BookingManagement />} />
         <Route path='/itineraryList/:packageId' element={<ItineraryList />} />
         <Route path='/feedback-form' element={<FeedbackForm />} />
+        <Route path='/hotel-list' element={<HotelList />} />
+        <Route path='/hotel-post' element={<HotelComponent />} />
+
 
 
       </Routes>

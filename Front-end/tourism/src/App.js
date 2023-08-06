@@ -13,6 +13,7 @@ import AgentItineraryManagement from './Components/AgentItinerary/AgentItinerary
 import BookingManagement from './Components/Booking/Booking';
 import Footer from './Components/Footer/Footer';
 import ItineraryList from './Components/Itinerary/Itinerary';
+import FeedbackForm from './Components/Feedback/FeedbackForm';
 
 const theme = createTheme({
   palette: {
@@ -56,6 +57,8 @@ function App() {
         <Route path="/add-itinerary/:packageId" element={<AgentItineraryManagement />} />
         <Route path='/booking' element={<BookingManagement />} />
         <Route path='/itineraryList/:packageId' element={<ItineraryList />} />
+        <Route path='/feedback-form' element={<FeedbackForm />} />
+
 
       </Routes>
       <Footer />

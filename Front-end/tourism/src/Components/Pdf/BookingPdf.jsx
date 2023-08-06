@@ -9,13 +9,13 @@ async function generatePDF(booking) {
 
   const fontSize = 20;
   const text = `   Booking Details
-  Booking ID: ${booking.bookingId}
-  User ID: ${booking.userId}
-  Package ID: ${booking.packageId}
-  Number of People: ${booking.numberOfPeople}
-  Date of the Trip: ${booking.dateOfTheTrip}
-  Total Amount: ${booking.totalAmount}
-  Date of Booking: ${booking.dateOfBooking}
+Booking ID: ${booking.bookingId}
+User ID: ${booking.userId}
+Package ID: ${booking.packageId}
+Number of People: ${booking.numberOfPeople}
+Date of the Trip: ${booking.dateOfTheTrip}
+Total Amount: ${booking.totalAmount}
+Date of Booking: ${booking.dateOfBooking}
 `;
 
   page.drawText(text, {
@@ -41,9 +41,11 @@ function BookingPDFGenerator({ booking }) {
   };
 
   return (
-    <button onClick={handleGeneratePDF} style={{ marginTop: '2px', marginLeft: '2px' }}>
-      Generate PDF
-    </button>
+    <div>
+      <button onClick={handleGeneratePDF} style={{ marginTop: '2px', marginLeft: '2px' }}>
+        Generate PDF
+      </button>
+    </div>
   );
 }
 

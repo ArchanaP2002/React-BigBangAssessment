@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import BookingPDFGenerator from '../Pdf/BookingPdf';
 import {
   Box,
   Container,
@@ -36,7 +37,8 @@ function Itinerary() {
     dateOfBooking: '',
   });
   const [openModal, setOpenModal] = useState(false);
-
+  const [bookingSuccess, setBookingSuccess] = useState(false);
+ 
   const [formErrors, setFormErrors] = useState({
     userId: '',
     numberOfPeople: '',
@@ -111,26 +113,32 @@ function Itinerary() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+  
     if (validateForm()) {
       try {
-        await axios.post('https://localhost:7228/api/Booking', {
+        const response = await axios.post('https://localhost:7228/api/Booking', {
           ...formData,
           packageId: packageId,
         });
-        setFormData({
-          userId: '',
-          numberOfPeople: '',
-          dateOfTheTrip: '',
-          totalAmount: '',
-          dateOfBooking: '',
-        });
+        
+        // Update the booking ID in formData
+        setFormData((prevData) => ({
+          ...prevData,
+          bookingId: response.data.bookingId,
+        }));
+        
         alert('Booking added successfully');
+        handleBookingSuccess(); // Show the "Thank You" modal
       } catch (error) {
         console.error('Error adding booking:', error);
       }
     }
   };
+  
+  const handleBookingSuccess = () => {
+    setBookingSuccess(true);
+  };
+  
 
   useEffect(() => {
     fetchItineraryDetails();
@@ -325,6 +333,43 @@ function Itinerary() {
                 </Grid>
               </Grid>
             </form>
+          </Box>
+        </Fade>
+      </Modal>
+
+      <Modal
+        open={bookingSuccess}
+        onClose={() => setBookingSuccess(false)}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={bookingSuccess}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              bgcolor: 'background.paper',
+              boxShadow: 24,
+              p: 4,
+              width: '50%',
+              maxHeight: '80%',
+              overflow: 'auto',
+              borderRadius: 8,
+            }}
+          >
+            <Typography variant="h4" sx={{ marginBottom: 2 }}>
+              Thank You for Booking!
+            </Typography>
+            <Typography variant="body1">
+              Your booking has been successful. We appreciate your choice and look forward to providing you
+              with an amazing experience.
+            </Typography>
+            <BookingPDFGenerator booking={formData} />
           </Box>
         </Fade>
       </Modal>

@@ -91,8 +91,8 @@ const HomePage = () => {
               <Typography variant="h5" paragraph>
                 Explore the world with us and experience unforgettable adventures.
               </Typography>
-              <Button variant="contained" size="large" className="explore-btn">
-                Explore Tours
+              <Button variant="contained" size="large" className="explore-btn" >
+               <Link to="/login"> Explore Tours</Link>
               </Button>
             </div>
           </Container>

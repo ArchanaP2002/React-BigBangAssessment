@@ -17,28 +17,6 @@ const styles = {
   container: {
     padding: '20px',
   },
-  header: {
-    textAlign: 'center',
-    marginBottom: '20px',
-  },
-  form: {
-    marginTop: '20px',
-    padding: '16px',
-    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
-    borderRadius: '8px',
-    backgroundColor: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  inputField: {
-    marginBottom: '10px',
-    width: '100%',
-  },
-  submitButton: {
-    marginTop: '10px',
-    width: '100%',
-  },
   card: {
     maxWidth: 300,
     marginBottom: 16,
@@ -51,17 +29,29 @@ const styles = {
   starContainer: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: '#FFDF00',
+    backgroundColor: '#FFDF00', // Golden color for stars
     padding: '2px',
     borderRadius: '4px',
     marginBottom: '8px',
   },
   starIcon: {
     fontSize: '1rem',
-    color: '#FFDF00',
+    color: '#FFDF00', // Golden color for stars
   },
   price: {
     fontWeight: 'bold',
+  },
+  form: {
+    marginTop: '20px',
+    padding: '16px',
+    boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+    borderRadius: '8px',
+  },
+  inputField: {
+    marginBottom: '10px',
+  },
+  submitButton: {
+    marginTop: '10px',
   },
 };
 
@@ -72,6 +62,11 @@ const HotelComponent = () => {
     hotelRating: 0,
     hotelPrice: 0,
     hotelImage: null,
+  });
+  const [filters, setFilters] = useState({
+    minPrice: '',
+    maxPrice: '',
+    minRating: '',
   });
 
   useEffect(() => {
@@ -90,15 +85,15 @@ const HotelComponent = () => {
   const renderStars = (rating) => {
     const filledStars = Math.floor(rating);
     const remainingStars = 5 - filledStars;
-  
+
     const stars = [];
-  
+
     for (let i = 1; i <= filledStars; i++) {
       stars.push(
         <StarIcon key={i} className={styles.starIcon} />,
       );
     }
-  
+
     for (let i = 1; i <= remainingStars; i++) {
       stars.push(
         <StarOutlineIcon key={filledStars + i} className={styles.starIcon} />,
@@ -142,6 +137,7 @@ const HotelComponent = () => {
         },
       });
 
+      // Clear form fields and fetch updated hotel list
       setNewHotel({
         hotelName: '',
         hotelRating: 0,
@@ -163,11 +159,31 @@ const HotelComponent = () => {
     }
   };
 
+  const handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [name]: value,
+    }));
+  };
+
+  const handleFilterSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get('https://localhost:7228/api/Hotel', {
+        params: filters,
+      });
+      setHotels(response.data);
+    } catch (error) {
+      console.error('Error filtering hotels:', error);
+    }
+  };
+
   return (
     <div style={styles.container}>
-     
-      
-      <Paper elevation={3} style={styles.form}>
+      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Hotel List</h1>
+
+      <Paper style={styles.form}>
         <h2>Add New Hotel</h2>
         <form onSubmit={handleSubmit}>
           <TextField
@@ -213,8 +229,48 @@ const HotelComponent = () => {
           </Button>
         </form>
       </Paper>
-      
-      <h1 style={styles.header}>Hotel List</h1>
+
+      <Paper style={styles.form}>
+        <h2>Filter Hotels</h2>
+        <form onSubmit={handleFilterSubmit}>
+          <TextField
+            name="minPrice"
+            type="number"
+            label="Minimum Price"
+            value={filters.minPrice}
+            onChange={handleFilterChange}
+            fullWidth
+            style={styles.inputField}
+          />
+          <TextField
+            name="maxPrice"
+            type="number"
+            label="Maximum Price"
+            value={filters.maxPrice}
+            onChange={handleFilterChange}
+            fullWidth
+            style={styles.inputField}
+          />
+          <TextField
+            name="minRating"
+            type="number"
+            label="Minimum Rating"
+            value={filters.minRating}
+            onChange={handleFilterChange}
+            fullWidth
+            style={styles.inputField}
+          />
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            style={styles.submitButton}
+          >
+            Apply Filters
+          </Button>
+        </form>
+      </Paper>
+
       <Grid container spacing={2} justifyContent="center">
         {hotels.map((hotel) => (
           <Grid item xs={12} sm={6} md={4} key={hotel.hotelId}>

@@ -104,7 +104,8 @@ namespace Travel.Controllers
                 return NotFound("Agent not found.");
             }
 
-             if (agent.Role != "Agent")
+             if (
+                agent.Role != "agent")
             {
                 return BadRequest("The user is not an agent.");
             }

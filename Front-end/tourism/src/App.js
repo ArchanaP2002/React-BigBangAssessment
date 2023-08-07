@@ -26,6 +26,8 @@ const theme = createTheme({
 });
 
 function App() {
+  const decodedToken = JSON.parse(localStorage.getItem('decodedToken'));
+
   return (
     <ThemeProvider theme={theme}>
     <BrowserRouter>
@@ -46,13 +48,13 @@ function App() {
         </ul>
         
       </nav> */}
-      <Navbar />
+      <Navbar decodedToken={decodedToken} />
       {/* <HomePage /> */}
       <Routes>
         <Route path="/register" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/admin-approval" element={<AdminApprovalPage />} />
-        <Route path='/' element={<HomePage />} />
+        <Route path='/home' element={<HomePage />} />
         <Route path='/admin-image-gallary' element={<AdminImageGallery />} />
         <Route path='/image-gallary' element={<ImageGallery />} />
         <Route path='/adding-package' element={<PackageManagement />} />
